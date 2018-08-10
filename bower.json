@@ -1,0 +1,17 @@
+{
+  "name": "jensen-js-libs",
+  "authors": [
+    "Allan Jensen - WinterNet Studio (http://winternet.no)"
+  ],
+  "description": "Misc helpful Javascript libraries",
+  "main": "",
+  "license": "MIT",
+  "homepage": "https://github.com/winternet-studio/jensen-js-libs",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
