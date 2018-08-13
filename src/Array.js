@@ -23,7 +23,6 @@ Copyright © 2006-2018 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		var sortOrder = 1;
 		if (descending) {
 			sortOrder = -1;
-			property = property.substr(1);
 		}
 		return function (a,b) {
 			var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
