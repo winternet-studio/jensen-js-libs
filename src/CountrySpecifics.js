@@ -263,6 +263,7 @@ Copyright © 2006-2019 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 * 	- `stateList` (req.) : object with list of states for each country
 	 * 		- key must match the possible country dropdown values (preferrably ISO-3166 country code) and it's value should be an array of subarrays where 1st value is state code (value) and 2nd value is state name (label)
 	 * 	- `ignoreNonExisting` : set to true to not add a non-existing state value to the dropdown when converting an existing text value
+	 * 	- `hideStateWhenNotUsed` : set a jQuery selector in order to hide the state field for countries where it isn't used
 	 * @return {void} - Only modifies DOM
 	 */
 	me.setupStateInputHandling = function(stateFieldSelector, countryFieldSelector, options) {
@@ -326,6 +327,17 @@ Copyright © 2006-2019 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 			$input.val(currStateValue);
 
 			$($state).replaceWith($input);
+		}
+
+		// Handle hiding the field
+		if (options.hideStateWhenNotUsed) {
+			if (currCountryCode && me.countriesWithoutStateProvince().indexOf(currCountryCode) > -1) {
+				// state not used in the current country => hide it
+				$(options.hideStateWhenNotUsed).hide();
+			} else {
+				// show it
+				$(options.hideStateWhenNotUsed).show();
+			}
 		}
 
 		// Setup calling the method again whenever country changes
