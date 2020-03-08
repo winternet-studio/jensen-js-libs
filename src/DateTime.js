@@ -693,9 +693,9 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 * Determine a person's age at a given date, when knowing their birth year and month
 	 *
 	 * @param {Date object} atDate - Date at which to calculate the person's age
-	 * @param {number} birthYear - (req.) Year person was born
-	 * @param {number} birthMonth - (req.) Month person was born
-	 * @param {number} birthday - (req.) Day of month person was born, or one of these strings if unknown:
+	 * @param {integer} birthYear - (req.) Year person was born
+	 * @param {integer} birthMonth - (req.) Month person was born
+	 * @param {integer|string} birthday - (req.) Day of month person was born, or one of these strings if unknown:
 	 *   - `chance_of_being_older`   : results in a chance people being actually older   than calculated here
 	 *   - `chance_of_being_younger` : results in a chance people being actually younger than calculated here
 	 * @return {integer} - Age
