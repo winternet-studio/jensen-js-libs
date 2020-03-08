@@ -1,6 +1,6 @@
 {
   "name": "jensen-js-libs",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Misc helpful Javascript libraries",
   "main": "index.js",
   "repository": "https://github.com/winternet-studio/jensen-js-libs",
