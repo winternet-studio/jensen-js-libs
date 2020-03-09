@@ -559,13 +559,13 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	me.formatTimePeriod = function($fromdate, $todate, $flags) {
 		var $yrmode, $shortmonths, $frommonth, $tomonth, $fromyear, $toyear, $output;
 
-		if (typeof $flags == 'undefined') $flags = '';
-		$yrmode = ($flags.indexOf('2digitYear') > -1 ? '2dig' : ($flags.indexOf('noYear') > -1 ? 'noyr' : '4dig'));
+		if (typeof $flags === 'undefined') $flags = {};
+		$yrmode = ($flags.2digitYear ? '2dig' : ($flags.noYear ? 'noyr' : '4dig'));
 
-		if ($flags.indexOf('neverAbbrevMonths') > -1) {
+		if ($flags.neverAbbrevMonths) {
 			$frommonth = $fromdate.formatDate('F');
 			$tomonth = $todate.formatDate('F');
-		} else if ($flags.indexOf('alwaysAbbrevMonths') == -1) {
+		} else if (!$flags.alwaysAbbrevMonths) {
 			$shortmonths = ['3', '4', '5', '6', '7'];
 			if ($shortmonths.indexOf($fromdate.formatDate('n')) > -1) {
 				$frommonth = $fromdate.formatDate('F');
