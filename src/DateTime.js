@@ -28,7 +28,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		var year, month, day;
 		var dateorder = format.substr(0, 3);
 		var datesep = format.substr(3, 1);
-		if (isinteger(datesep)) {
+		if (me._isInteger(datesep)) {
 			throw 'Configuration error. Date delimiter is invalid: '+ format;
 		}
 		var parts = mydate.split(datesep);
@@ -44,7 +44,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 			throw 'Configuration error. Date format is invalid: '+ dateorder;
 		}
 		// Check year and mont and other general checks
-		if (!isinteger(year) || !isinteger(month) || !isinteger(day) || year < 0 || month < 0 || month > 12 || day < 0) {
+		if (!me._isInteger(year) || !me._isInteger(month) || !me._isInteger(day) || year < 0 || month < 0 || month > 12 || day < 0) {
 			return false;
 			//throw 'Date is invalid: '+ format + mydate;
 		}
@@ -128,7 +128,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 					if (isampm == 'am' && hours == 12) {
 						hours = 0;
 					} else if (isampm == 'pm' && hours != 12) {
-						hours = setinteger(hours) + 12;
+						hours = parseInt(hours, 10) + 12;
 					}
 				} else {
 					return false;
@@ -419,7 +419,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		var diff;
 		diff = time2.getTime() - time1.getTime();
 		if (interval) {
-			return convertFromMilliseconds(diff, interval);
+			return me.convertFromMilliseconds(diff, interval);
 		} else {
 			return diff;
 		}
@@ -702,7 +702,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 */
 	me.calculateAge = function(atDate, birthYear, birthMonth, birthDay) {
 		var age, atYear, atMonth, atDay, hadBirthdayInYear;
-		if (!isinteger(birthDay) && birthDay != 'chance_of_being_older' && birthDay != 'chance_of_being_younger') {
+		if (!me._isInteger(birthDay) && birthDay != 'chance_of_being_older' && birthDay != 'chance_of_being_younger') {
 			throw 'Invalid day of month for calculating age: '+ birthDay;
 		}
 
@@ -729,6 +729,12 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 			age -= 1;  //person haven't had birth day yet in this year, subtract one
 		}
 		return age;
+	};
+
+	me._isInteger = function(v) {  //NOTE: should be moved into a core library if we ever make one
+		if(v===null||typeof v=="undefined"||v.length==0)return false;
+		if(isNaN(v))return false;
+		return(parseInt(v,10)===parseFloat(v)?true:false);
 	};
 
 }( window.Jjs = window.Jjs || {}, jQuery ));
