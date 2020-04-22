@@ -560,7 +560,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		var $yrmode, $shortmonths, $frommonth, $tomonth, $fromyear, $toyear, $output;
 
 		if (typeof $flags === 'undefined') $flags = {};
-		$yrmode = ($flags.2digitYear ? '2dig' : ($flags.noYear ? 'noyr' : '4dig'));
+		$yrmode = ($flags['2digitYear'] ? '2dig' : ($flags.noYear ? 'noyr' : '4dig'));
 
 		if ($flags.neverAbbrevMonths) {
 			$frommonth = $fromdate.formatDate('F');
