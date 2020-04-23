@@ -3,10 +3,12 @@ This file contain Javascript functions related to date and time
 Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All rights reserved.
 */
 
-(function( Jjs, $, undefined ) {
-
-	Jjs.DateTime = {};
-	var me = Jjs.DateTime;
+(function(exports) {
+	if (exports === null) {  //if true we are in a browser context => create a single variable on the window object instead
+		if (typeof window.Jjs === 'undefined') window.Jjs = {};
+		window.Jjs.DateTime = {};
+		exports = window.Jjs.DateTime;
+	}
 
 	/**
 	 * Convert a date to JS Date object (milliseconds)
@@ -17,7 +19,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 * @param {string} format - Valid values are `dmy`, `mdy`, `ymd` added by a forth character which sets the delimiter which can be anything except a number
 	 * @return {Date object|boolean} - Valid date returns a Date object, invalid date or empty value returns false
 	 */
-	me.dateToJsDate = function(mydate, format) {
+	exports.dateToJsDate = function(mydate, format) {
 		if (mydate.length == 0) {
 			return false;
 			// throw 'No date was given.';
@@ -28,7 +30,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		var year, month, day;
 		var dateorder = format.substr(0, 3);
 		var datesep = format.substr(3, 1);
-		if (me._isInteger(datesep)) {
+		if (exports._isInteger(datesep)) {
 			throw 'Configuration error. Date delimiter is invalid: '+ format;
 		}
 		var parts = mydate.split(datesep);
@@ -44,7 +46,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 			throw 'Configuration error. Date format is invalid: '+ dateorder;
 		}
 		// Check year and mont and other general checks
-		if (!me._isInteger(year) || !me._isInteger(month) || !me._isInteger(day) || year < 0 || month < 0 || month > 12 || day < 0) {
+		if (!exports._isInteger(year) || !exports._isInteger(month) || !exports._isInteger(day) || year < 0 || month < 0 || month > 12 || day < 0) {
 			return false;
 			//throw 'Date is invalid: '+ format + mydate;
 		}
@@ -80,7 +82,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 *     - hh:mm:ss [am|pm] (12hr clock)
 	 * @return {Date object|boolean} - Valid date returns a Date object, invalid date or empty value returns false
 	 */
-	me.timeToJsDate = function(mytime, format) {
+	exports.timeToJsDate = function(mytime, format) {
 		mytime = mytime.replace(/ /, '');  //remove all spaces
 		mytime = mytime.toLowerCase();  //ensure any am/pm is lower case
 		if (mytime.length == 0) {
@@ -170,7 +172,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 *   - IMPORTANT: if this is used you MUST validate the datetime later on before using it (preferrably on server-side)
 	 * @return {string} - MySQL formatted date and/or time, or empty string if the values are empty, or if conversion fails and returnonfail is set, it's value is returned.
 	 */
-	me.toMysqlDateTime = function(datetime, dateformat, timeformat, returnonfail) {
+	exports.toMysqlDateTime = function(datetime, dateformat, timeformat, returnonfail) {
 		var skipfail;
 		if (typeof returnonfail != 'undefined') {
 			skipfail = true;
@@ -327,7 +329,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		}
 	};
 
-	me.checkDate = function(m, d, y) {
+	exports.checkDate = function(m, d, y) {
 	  //  discuss at: http://phpjs.org/functions/checkdate/
 	  // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
 	  // improved by: Pyerre
@@ -352,7 +354,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 * @param {Date object} mytime
 	 * @return {Date object}
 	 */
-	me.mergeDateTime = function(mydate, mytime) {
+	exports.mergeDateTime = function(mydate, mytime) {
 		var d = typeof mydate;
 		var t = typeof mytime;
 		if (d != 'object' || t != 'object') {
@@ -372,7 +374,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 * @param {string} interval - The unit for the adjust_by number
 	 * @return {Date object}
 	 */
-	me.timeAdd = function(time_obj, adjust_by, interval) {
+	exports.timeAdd = function(time_obj, adjust_by, interval) {
 		if (!adjust_by) {
 			throw 'Missing adjustment number for adding time: '+ time_obj;
 		}
@@ -415,11 +417,11 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 * @param {string} interval - (opt.) Measure to calculate the difference in (hours, days, etc. according to convertFromMilliseconds() )
 	 * @return {integer} - The difference in the measure specified by interval argument. Remember the number might have decimals. If interval not specified, milliseconds are returned.
 	 */
-	me.timeDifference = function(time1, time2, interval) {
+	exports.timeDifference = function(time1, time2, interval) {
 		var diff;
 		diff = time2.getTime() - time1.getTime();
 		if (interval) {
-			return me.convertFromMilliseconds(diff, interval);
+			return exports.convertFromMilliseconds(diff, interval);
 		} else {
 			return diff;
 		}
@@ -431,7 +433,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 * @param {Date object} time_obj - A Javascript time object
 	 * @return {integer} - Time difference in milliseconds relative to now
 	 */
-	me.timeNowDifference = function(time_obj) {
+	exports.timeNowDifference = function(time_obj) {
 		var diff;
 		now_time = new Date();
 		diff = new_time.getTime() - time_obj.getTime();
@@ -453,7 +455,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 *
 	 * @return {object} - See code below. The unit for the `general_guide` is specified in `appropiate_unit`.
 	 */
-	me.timePeriodSingleUnit = function(opts) {
+	exports.timePeriodSingleUnit = function(opts) {
 		//determine unit names
 		var times = {}, rounded, roundDec, txt_;
 		var lbl_secs_one,  lbl_mins_one,  lbl_hours_one,  lbl_days_one,  lbl_weeks_one,  lbl_mnths_one,  lbl_years_one;
@@ -556,7 +558,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 *   - `neverAbbrevMonths` : set true to always spell out fully the month names
 	 * @return {string} - Eg. "Dec. 3-5, 2010" or "Nov. 30 - Dec. 4, 2010" or "Dec. 27, 2010 - Jan. 2, 2011"
 	 */
-	me.formatTimePeriod = function($fromdate, $todate, $flags) {
+	exports.formatTimePeriod = function($fromdate, $todate, $flags) {
 		var $yrmode, $shortmonths, $frommonth, $tomonth, $fromyear, $toyear, $output;
 
 		if (typeof $flags === 'undefined') $flags = {};
@@ -616,7 +618,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 *   - negative: client is behind actual time
 	 *   - you can SUBTRACT this difference when doing time calculations on client time for getting correct time results (assuming server has the correct time)
 	 */
-	me.timeDiffServerClient = function(server_time) {
+	exports.timeDiffServerClient = function(server_time) {
 		var diff;
 		client_time = new Date();
 		server_time = new Date(server_time * 1000);
@@ -630,7 +632,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 *
 	 * return {Date object}
 	 */
-	me.getTime = function() {
+	exports.getTime = function() {
 		if (window.curr_client_time_offset) {  //check for global variable containing the client time offset from server time
 			return new Date( (new Date()).getTime() - window.curr_client_time_offset);
 		} else {
@@ -638,7 +640,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		}
 	};
 
-	me.convertFromMilliseconds = function(milliseconds, interval) {
+	exports.convertFromMilliseconds = function(milliseconds, interval) {
 		var diffTarget;
 		switch (interval) {
 		case 'week': case 'weeks': case 'wk': case 'wks':
@@ -665,7 +667,7 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		return diffTarget;
 	};
 
-	me.convertToMilliseconds = function(timePeriod, sourceInterval) {
+	exports.convertToMilliseconds = function(timePeriod, sourceInterval) {
 		var diffTarget;
 		switch (sourceInterval) {
 		case 'week': case 'weeks': case 'wk': case 'wks':
@@ -700,9 +702,9 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 *   - `chance_of_being_younger` : results in a chance people being actually younger than calculated here
 	 * @return {integer} - Age
 	 */
-	me.calculateAge = function(atDate, birthYear, birthMonth, birthDay) {
+	exports.calculateAge = function(atDate, birthYear, birthMonth, birthDay) {
 		var age, atYear, atMonth, atDay, hadBirthdayInYear;
-		if (!me._isInteger(birthDay) && birthDay != 'chance_of_being_older' && birthDay != 'chance_of_being_younger') {
+		if (!exports._isInteger(birthDay) && birthDay != 'chance_of_being_older' && birthDay != 'chance_of_being_younger') {
 			throw 'Invalid day of month for calculating age: '+ birthDay;
 		}
 
@@ -731,10 +733,10 @@ Copyright © 2006-2020 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		return age;
 	};
 
-	me._isInteger = function(v) {  //NOTE: should be moved into a core library if we ever make one
+	exports._isInteger = function(v) {  //NOTE: should be moved into a core library if we ever make one
 		if(v===null||typeof v=="undefined"||v.length==0)return false;
 		if(isNaN(v))return false;
 		return(parseInt(v,10)===parseFloat(v)?true:false);
 	};
 
-}( window.Jjs = window.Jjs || {}, jQuery ));
+})(typeof exports === 'undefined' ? null : exports);
