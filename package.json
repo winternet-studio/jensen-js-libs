@@ -7,7 +7,7 @@
   "author": "Allan Jensen, WinterNet Studio",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^7.1.1"
+    "mocha": "^7.2.0"
   },
   "scripts": {
     "test": "mocha --recursive \"./tests/*.js\""
