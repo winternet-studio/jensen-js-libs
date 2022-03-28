@@ -87,4 +87,46 @@ Copyright © 2006-2022 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		return $input * 180 / Math.PI;
 	};
 
+	/**
+	 * Convert a latitude or longitude from Decimal Degrees to Degrees Minutes Seconds
+	 *
+	 * Eg. 55.68052, 12.56223  ===>  {degrees: 55, minutes: 40, seconds: 49, direction: 'N'}, {degrees: 12, minutes: 33, seconds: 44, direction: 'E'}
+	 * To be shown eg. as `N 55° 40' 49.872", E 12° 33' 44.028"`
+	 *
+	 * @param {float} coordinate : The decimal degrees, eg. `59.7682642` or `-122.4726193`
+	 * @param {string} type : Whether the decimal degrees is for a latitude or longitude: `lat` or `lng`
+	 * @return {array} : Array with keys `degrees`, `minutes`, `seconds`, `direction`
+	 */
+	exports.convertCoordinateDecimalToDMS = function(coordinate, type) {
+		var absolute = Math.abs(coordinate);
+		var degrees = Math.floor(absolute);
+		var minutesNotTruncated = (absolute - degrees) * 60;
+		var minutes = Math.floor(minutesNotTruncated);
+		var seconds = Math.floor((minutesNotTruncated - minutes) * 60);
+
+		var cardinalDirection;
+		if (type == 'lat') {
+			cardinalDirection = coordinate >= 0 ? 'N' : 'S';
+		} else {
+			cardinalDirection = coordinate >= 0 ? 'E' : 'W';
+		}
+
+		return {
+			degrees: degrees,
+			minutes: minutes,
+			seconds: seconds,
+			direction: cardinalDirection,
+			textual: ''+ cardinalDirection +' '+ degrees +'° '+ minutes +"' "+ seconds +'"',
+		}
+	};
+
+	exports.convertCoordinateDMSToDecimal = function(degrees, minutes, seconds, direction) {  //source: https://stackoverflow.com/a/1140335/2404541
+		var dd = degrees + minutes/60 + seconds/(60*60);
+
+		if (direction == 'S' || direction == 'W') {
+			dd = dd * -1;
+		} // Don't do anything for N or E
+		return dd;
+	};
+
 })(typeof exports === 'undefined' ? null : exports);
