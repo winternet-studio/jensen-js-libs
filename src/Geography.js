@@ -1,14 +1,16 @@
 /*
 This file contain Javascript functions related to geography, eg. calculations with latitude/longitude
-Copyright © 2006-2018 WinterNet Studio, Allan Jensen (www.winternet.no). All rights reserved.
+Copyright © 2006-2022 WinterNet Studio, Allan Jensen (www.winternet.no). All rights reserved.
 */
 
-(function( Jjs, $, undefined ) {
+(function(exports) {
+	if (exports === null) {  //if true we are in a browser context => create a single variable on the window object instead
+		if (typeof window.Jjs === 'undefined') window.Jjs = {};
+		window.Jjs.Geography = {};
+		exports = window.Jjs.Geography;
+	}
 
-	Jjs.Geography = {};
-	var me = Jjs.Geography;
-
-	me.bearingRhumbline = function($lat1, $lng1, $lat2, $lng2) {
+	exports.bearingRhumbline = function($lat1, $lng1, $lat2, $lng2) {
 		/*
 		DESCRIPTION:
 		- calculate the bearing of a rhumb-line (straight line on map), in degrees, from starting Point A to remote Point B
@@ -42,7 +44,7 @@ Copyright © 2006-2018 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 		return (this.rad2deg(Math.atan2($dLon, $dPhi)) + 360) % 360;
 	};
 
-	me.pointFromBearingDistance = function($lat, $lng, $angle, $distance) {
+	exports.pointFromBearingDistance = function($lat, $lng, $angle, $distance) {
 		/*
 		DESCRIPTION:
 		- calculate the point (latitude/longitude) given a point of origin, a bearing, and a distance
@@ -78,11 +80,11 @@ Copyright © 2006-2018 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 
 		return $new_latlng;
 	};
-	me.deg2rad = function($input) {  //equivalent to PHP deg2rad()
+	exports.deg2rad = function($input) {  //equivalent to PHP deg2rad()
 		return $input * Math.PI / 180;
 	};
-	me.rad2deg = function($input) {  //equivalent to PHP rad2deg()
+	exports.rad2deg = function($input) {  //equivalent to PHP rad2deg()
 		return $input * 180 / Math.PI;
 	};
 
-}( window.Jjs = window.Jjs || {}, jQuery ));
+})(typeof exports === 'undefined' ? null : exports);
