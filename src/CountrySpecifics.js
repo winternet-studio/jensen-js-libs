@@ -91,7 +91,7 @@ Copyright © 2006-2019 WinterNet Studio, Allan Jensen (www.winternet.no). All ri
 	 * @return {array}
 	 */
 	me.countriesRequiringStateProvince = function() {
-		return ['US','CA','AU','CN','MX','MY','IT'];  //currently not an exhaustive list
+		return ['US','CA','AU','CN','CZ','MX','MY','IT'];  //currently not an exhaustive list
 	};
 
 	/**
