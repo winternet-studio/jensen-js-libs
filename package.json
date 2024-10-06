@@ -2,6 +2,7 @@
   "name": "jensen-js-libs",
   "version": "1.2.1",
   "description": "Misc helpful Javascript libraries",
+  "deprecated": "This package is deprecated. Please use 'jensen-js-essentials' instead which has almost identical API.",
   "main": "index.js",
   "repository": "https://github.com/winternet-studio/jensen-js-libs",
   "author": "Allan Jensen, WinterNet Studio",
