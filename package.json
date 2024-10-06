@@ -1,6 +1,6 @@
 {
   "name": "jensen-js-libs",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Misc helpful Javascript libraries",
   "deprecated": "This package is deprecated. Please use 'jensen-js-essentials' instead which has almost identical API.",
   "main": "index.js",
